@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow"><meta name="color-scheme" content="light">
-<title>Продажи и маркетинг · Стройматериалы</title>
+<title>Стройматериалы · Финансовая модель</title>
 <meta name="description" content="Финансовая модель компании по продаже строительных материалов в Москве и МО. Шесть блоков, 60 месяцев и сценарный анализ.">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2315233c'/%3E%3Cpath d='M7 22V16h5v6m3 0V11h5v11m3 0V6h3v16' fill='%235ae0ca'/%3E%3C/svg%3E">
 <style>
@@ -16,7 +16,6 @@
 
 </style>
 <script type="module">
-if (!location.hash) location.hash = '#sales';
 const VERSION = '2026-10-02';
 const DEFAULTS = {
  start:'2026-11',capital:10000000,volumeGrowth:8,priceGrowth:4,costGrowth:5,rampStart:25,rampMonths:10,repeatShare:15,
@@ -149,6 +148,7 @@ function calculate(p,scenario='base') {
  const years=Array.from({length:5},(_,y)=>{const part=months.slice(y*12,y*12+12),last=part.at(-1);return {year:y+1,start:part[0].date,end:last.date,revenue:part.reduce((a,r)=>a+r.revenue,0),gp:part.reduce((a,r)=>a+r.gp,0),ebitda:part.reduce((a,r)=>a+r.ebitda,0),net:part.reduce((a,r)=>a+r.net,0),cfo:part.reduce((a,r)=>a+r.cfo,0),cash:last.cash,nwc:last.nwc};});
  return {scenario,months,years,initial,summary:{revenue:sum('revenue'),gp:sum('gp'),ebitda:sum('ebitda'),net:sum('net'),finalCash:cash,minCash,peakNeed,payback:recovered<0?null:recovered+1,npv,margin,conversion:lead0?orders0/lead0*100:0,maxBalanceError:Math.max(...months.map(m=>Math.abs(m.balanceError))),maxCashError:Math.max(...months.map(m=>Math.abs(m.cashError))),openingBalanceError:initial.cash+initial.inventory+initial.assets+initial.deposit+initial.vatCredit-initial.equity}};
 }
+
 
 const $=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const nf=new Intl.NumberFormat('ru-RU',{maximumFractionDigits:0}),df=new Intl.NumberFormat('ru-RU',{maximumFractionDigits:1}),money=v=>nf.format(v),mn=v=>df.format(v/1e6)+' млн ₽',per=v=>df.format(v)+'%',sign=v=>v<0?'negative':'positive';
